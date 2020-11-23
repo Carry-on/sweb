@@ -95,6 +95,36 @@
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
+    
+    <!-- apach工具包 -->
+    <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+    </dependency>
+
+    <!--手机号工具包-->
+    <dependency>
+        <groupId>com.googlecode.libphonenumber</groupId>
+        <artifactId>geocoder</artifactId>
+        <version>2.15</version>
+    </dependency>
+
+    <dependency>
+        <groupId>com.googlecode.libphonenumber</groupId>
+        <artifactId>libphonenumber</artifactId>
+        <version>6.3</version>
+    </dependency>
+
+    <dependency>
+        <groupId>com.googlecode.libphonenumber</groupId>
+        <artifactId>prefixmapper</artifactId>
+        <version>2.15</version>
+    </dependency>
+    <dependency>
+        <groupId>com.googlecode.libphonenumber</groupId>
+        <artifactId>carrier</artifactId>
+        <version>1.5</version>
+    </dependency>
   </dependencies>
 
   <build>
