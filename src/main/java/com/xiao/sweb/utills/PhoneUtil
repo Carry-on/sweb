@@ -1,0 +1,275 @@
+package com.xiao.sweb.utills;
+
+import com.google.i18n.phonenumbers.PhoneNumberToCarrierMapper;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
+import com.google.i18n.phonenumbers.geocoding.PhoneNumberOfflineGeocoder;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.Locale;
+
+/**
+ * @author xiaoyu
+ * @version 1.0
+ * @date 2020/11/23 22:30
+ * @Description: 手机号码归属地工具类
+ */
+public class PhoneUtil {
+    private static PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
+
+    private static PhoneNumberToCarrierMapper carrierMapper = PhoneNumberToCarrierMapper.getInstance();
+
+    private static PhoneNumberOfflineGeocoder geocoder = PhoneNumberOfflineGeocoder.getInstance();
+
+    /**
+     * 根据国家代码和手机号  判断手机号是否有效
+     * @param phoneNumber
+     * @param countryCode
+     * @return
+     */
+    public boolean checkPhoneNumber(String phoneNumber, String countryCode){
+        int ccode = Integer.valueOf(countryCode);
+        long phone = Long.valueOf(phoneNumber);
+        Phonenumber.PhoneNumber pn = new Phonenumber.PhoneNumber();
+        pn.setCountryCode(ccode);
+        pn.setNationalNumber(phone);
+        return phoneNumberUtil.isValidNumber(pn);
+
+    }
+
+
+
+    /**
+     * 根据国家代码和手机号  判断手机运营商
+     * @param phoneNumber
+     * @param countryCode
+     * @return
+     */
+    public String getCarrier(String phoneNumber, String countryCode){
+        int ccode = Integer.valueOf(countryCode);
+        long phone = Long.valueOf(phoneNumber);
+        Phonenumber.PhoneNumber pn = new Phonenumber.PhoneNumber();
+        pn.setCountryCode(ccode);
+        pn.setNationalNumber(phone);
+        //返回结果只有英文，自己转成成中文
+        String carrierEn = carrierMapper.getNameForNumber(pn, Locale.ENGLISH);
+        String carrierZh = "";
+        carrierZh += geocoder.getDescriptionForNumber(pn, Locale.CHINESE);
+        switch (carrierEn) {
+            case "China Mobile":
+                carrierZh += "移动";
+                break;
+            case "China Unicom":
+                carrierZh += "联通";
+                break;
+            case "China Telecom":
+                carrierZh += "电信";
+                break;
+            default:
+                break;
+        }
+        return carrierZh;
+    }
+
+
+
+    /**
+     *
+     * @Description: 根据国家代码和手机号  手机归属地
+     * @param @param phoneNumber
+     * @param @param countryCode
+     * @param @return    参数
+     * @throws
+     */
+    public String getGeo(String phoneNumber, String countryCode){
+        int ccode = Integer.valueOf(countryCode);
+        long phone = Long.valueOf(phoneNumber);
+        Phonenumber.PhoneNumber pn = new Phonenumber.PhoneNumber();
+        pn.setCountryCode(ccode);
+        pn.setNationalNumber(phone);
+        return geocoder.getDescriptionForNumber(pn, Locale.CHINESE);
+    }
+
+
+
+    /**
+     *
+     * @Title: getPhoneRegionCode
+     * @Description: 得到手机的归宿地编码
+     * @return String    返回类型
+     * @throws
+     */
+    public String getPhoneRegionCode(String phoneNumber, String countryCode){
+        String areaName=getGeo(phoneNumber,countryCode);
+        if(StringUtils.isEmpty(areaName)){
+            return "";
+        }
+        if(areaName.length()<3){
+            return "";
+        }
+        return areaName;
+    }
+
+
+    public static void main(String[] args) {
+        PhoneUtil util = new PhoneUtil();
+        String filePath = "C:\\Myfolder\\会员开通记录20201202.xls";
+        List<Map<String,String>> list = util.read(filePath);
+        //遍历解析出来的list
+//        for (Map<String,String> map : list) {
+//            for (Map.Entry<String,String> entry : map.entrySet()) {
+//                System.out.println(entry.getKey()+":"+entry.getValue()+",");
+//            }
+////            System.out.println();
+//        }
+        System.out.println(list.size());
+        // 保存到新execl里
+        try {
+            util.createExecl(list);
+        } catch (IOException e) {
+            System.out.println("exception");
+            e.printStackTrace();
+        }
+
+//        //19526203127
+//        System.out.println(util.getCarrier("16621144127","86"));
+//        System.out.println(util.getCarrier("19526203127","86"));
+    }
+
+    public void createExecl(List<Map<String,String>> list) throws IOException {
+
+        // 创建工作薄 xlsx
+        XSSFWorkbook  xssWorkbook = new XSSFWorkbook();
+        // 创建工作表
+        XSSFSheet sheet = xssWorkbook.createSheet("sheet1");
+
+        for (int row = 0; row < list.size(); row++)
+        {
+            XSSFRow rows = sheet.createRow(row);
+            System.out.println("row-->"+row);
+            Iterator iterator = list.get(0).keySet().iterator();
+            for (int col = 0; col < list.get(0).keySet().size()+1; col++)
+            {
+                // 向工作表中添加数据
+//                System.out.println(list.get(row).get("手机号"));
+                if(!iterator.hasNext()){
+                    rows.createCell(col).setCellValue(getCarrier(list.get(row).get("手机号"),"86"));
+                }else{
+                    rows.createCell(col).setCellValue(list.get(row).get(iterator.next()));
+                }
+
+            }
+        }
+//
+        File xlsFile = new File("C:\\Myfolder\\poi.xls");
+        FileOutputStream xlsStream = new FileOutputStream(xlsFile);
+        xssWorkbook.write(xlsStream);
+    }
+
+    public List<Map<String,String>> read(String filePath){
+        Workbook wb =null;
+        Sheet sheet = null;
+        Row row = null;
+        List<Map<String,String>> list = null;
+        String cellData = null;
+        List<String> columns = new ArrayList();
+        wb = readExcel(filePath);
+        if(wb != null){
+            //用来存放表中数据
+            list = new ArrayList<Map<String,String>>();
+            //获取第一个sheet
+            sheet = wb.getSheetAt(0);
+            //获取最大行数
+            int rownum = sheet.getPhysicalNumberOfRows();
+            //获取第一行
+            row = sheet.getRow(0);
+            //获取表头
+            Iterator<Cell> iterator = row.cellIterator();
+            while(iterator.hasNext()){
+                columns.add(iterator.next().toString());
+            }
+            //获取最大列数
+            int colnum = row.getPhysicalNumberOfCells();
+            for (int i = 1; i<rownum; i++) {
+                Map<String,String> map = new LinkedHashMap<String,String>();
+                row = sheet.getRow(i);
+                // 过滤没有用户名的用户
+//                if(!getCellFormatValue(row.getCell(2)).toString().isEmpty()){
+                    if(row !=null){
+//                        if(getCellFormatValue(row.getCell(2)).toString().length()!=0){
+                            for (int j=0;j<colnum;j++){
+                                cellData = (String) getCellFormatValue(row.getCell(j));
+                                // 筛选有用户昵称的用户
+                                map.put(columns.get(j), cellData);
+//                            }
+                        }
+                    }else{
+                        break;
+                    }
+                    list.add(map);
+//                }
+            }
+
+        }
+        return list;
+    }
+
+    //读取excel
+    public static Workbook readExcel(String filePath){
+        Workbook wb = null;
+        if(filePath==null){
+            return null;
+        }
+        String extString = filePath.substring(filePath.lastIndexOf("."));
+        InputStream is = null;
+        try {
+            is = new FileInputStream(filePath);
+            if(".xls".equals(extString)){
+                return wb = new HSSFWorkbook(is);
+            }else if(".xlsx".equals(extString)){
+                return wb = new XSSFWorkbook(is);
+            }else{
+                return wb = null;
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return wb;
+    }
+    public static Object getCellFormatValue(Cell cell){
+        Object cellValue = null;
+        if(cell!=null){
+            //判断cell类型
+            switch(cell.getCellType()){
+                case Cell.CELL_TYPE_NUMERIC:{
+                    cellValue = String.valueOf(cell.getNumericCellValue());
+                    break;
+                }
+                case Cell.CELL_TYPE_FORMULA:{
+                    //判断cell是否为日期格式
+//                    if(DateUtil.isCellDateFormatted(cell)){
+//                        //转换为日期格式YYYY-mm-dd
+//                        cellValue = cell.getDateCellValue();
+//                    }else{
+//                        //数字
+//                        cellValue = String.valueOf(cell.getNumericCellValue());
+//                    }
+                    cellValue = String.valueOf(cell.getNumericCellValue());
+                    break;
+                }
+                case Cell.CELL_TYPE_STRING:{
+                    cellValue = cell.getRichStringCellValue().getString();
+                    break;
+                }
+                default:
+                    cellValue = "";
+            }
+        }else{
+            cellValue = "";
+        }
+        return cellValue;
+    }
+}
