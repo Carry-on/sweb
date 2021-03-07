@@ -14,7 +14,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class Swagger2Config {
 
     @Bean
-    public Docket CreateRestApi(){
+    public Docket CreateRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .pathMapping("/")
                 .select()
@@ -22,9 +22,9 @@ public class Swagger2Config {
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(new ApiInfoBuilder()
-                    .title("Springboot 整合 Swagger2")
-                    .description("Springboot 整合 Swagger2，详细信息......")
-                    .version("1.0")
-                    .build());
+                        .title("Springboot 整合 Swagger2")
+                        .description("Springboot 整合 Swagger2，详细信息......")
+                        .version("1.0")
+                        .build());
     }
 }

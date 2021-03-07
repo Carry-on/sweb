@@ -13,7 +13,13 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.DispatcherServlet;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Iterator;
 import java.util.List;
 
 @MapperScan("com.xiao.sweb.dao.*.mapper")
@@ -29,21 +35,21 @@ public class Hello {
 
     @RequestMapping("/hello")
     @ApiOperation(value = "Hello World！接口", notes = "hello", httpMethod = "GET")
-    public String Hello(){
+    public String Hello() {
         return "Hello World!";
     }
 
     @RequestMapping("/getBooksName/{id}")
     @ApiOperation(value = "测试mybatis 链接接口", notes = "测试mybatis 链接接口", httpMethod = "GET")
     @ApiImplicitParam(name = "id", value = "book id", defaultValue = "1", required = true)
-    public String getBookName(@PathVariable(value = "id") int id){
+    public String getBookName(@PathVariable(value = "id") int id) {
         Books books = booksService.selectByPrimaryKey(id);
         return books.getTitle();
     }
 
     @RequestMapping("/error111")
     @ApiOperation(value = "异常捕获接口", notes = "异常捕获接口", httpMethod = "GET")
-    public String error(){
+    public String error() {
         int[] a = {};
         int i = a[1];
         return "thymeleaf/error";
@@ -55,10 +61,25 @@ public class Hello {
             @ApiImplicitParam(name = "page num", value = "pageNum", defaultValue = "1"),
             @ApiImplicitParam(name = "page size", value = "pageSize", defaultValue = "2", required = true)
     })
-    public List<Books> getBooksByPage(@PathVariable(value = "pageNum") Integer pageNum, @PathVariable(value = "pageSize") Integer pageSize){
+    public List<Books> getBooksByPage(@PathVariable(value = "pageNum") Integer pageNum, @PathVariable(value =
+            "pageSize") Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<Books> list =  booksService.selectAll();
+        List<Books> list = booksService.selectAll();
         return list;
+    }
+
+    @RequestMapping("MultipartFiles")
+    public String MultiPartFile(MultipartFile[] files, HttpServletRequest request) {
+        CommonsMultipartResolver multipartResolver =
+                new CommonsMultipartResolver(request.getSession().getServletContext());
+        if (multipartResolver.isMultipart(request)) {
+            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+            Iterator iterator = multipartRequest.getFileNames();
+            while (iterator.hasNext()) {
+                MultipartFile file = multipartRequest.getFile(iterator.next().toString());
+            }
+        }
+        return "";
     }
 
 }

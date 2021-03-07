@@ -16,13 +16,13 @@ public class SignInAndSignSignUpController {
 
     @RequestMapping("/signIn")
     @Transactional(propagation = Propagation.SUPPORTS) //事务
-    public String signIn(){
+    public String signIn() {
         return "sign in";
     }
 
     @RequestMapping("/signUp")
     @Transactional(propagation = Propagation.REQUIRED) //事务
-    public String signUp(){
+    public String signUp() {
         usersService.insert(new Users());
         return "signUp";
     }

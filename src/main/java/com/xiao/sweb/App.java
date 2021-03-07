@@ -9,9 +9,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @MapperScan("com.xiao.sweb.dao")
-@ComponentScan(basePackages = {"com.xiao.sweb","com.xiao.sweb.dao"})
+@ComponentScan(basePackages = {"com.xiao.sweb", "com.xiao.sweb.dao","com.xiao.sweb.tasks"})
 @EnableScheduling
-@EnableAsync
+//@EnableAsync
 public class App {
     public static void main(String[] args) {
         SpringApplication.run(App.class, args);

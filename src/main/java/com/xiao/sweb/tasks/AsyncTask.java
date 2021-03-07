@@ -10,7 +10,7 @@ import java.util.concurrent.Future;
 public class AsyncTask {
 
     @Async
-    public Future<Boolean> doTask1() throws Exception{
+    public Future<Boolean> doTask1() throws Exception {
         long start = System.currentTimeMillis();
         Thread.sleep(1000);
         long end = System.currentTimeMillis();
@@ -19,7 +19,7 @@ public class AsyncTask {
     }
 
     @Async
-    public Future<Boolean> doTask2() throws Exception{
+    public Future<Boolean> doTask2() throws Exception {
         long start = System.currentTimeMillis();
         Thread.sleep(700);
         long end = System.currentTimeMillis();
@@ -28,7 +28,7 @@ public class AsyncTask {
     }
 
     @Async
-    public Future<Boolean> doTask3() throws Exception{
+    public Future<Boolean> doTask3() throws Exception {
         long start = System.currentTimeMillis();
         Thread.sleep(600);
         long end = System.currentTimeMillis();

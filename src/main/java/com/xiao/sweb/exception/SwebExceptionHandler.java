@@ -15,7 +15,8 @@ public class SwebExceptionHandler {
 
 
 //    @ExceptionHandler(value = Exception.class)
-//    public Object errorHandler(HttpServletRequest request, HttpServletResponse response, Exception e) throws Exception{
+//    public Object errorHandler(HttpServletRequest request, HttpServletResponse response, Exception e) throws
+//    Exception{
 //        e.printStackTrace();
 //
 //        ModelAndView modelAndView = new ModelAndView();
@@ -26,21 +27,21 @@ public class SwebExceptionHandler {
 //    }
 
     @ExceptionHandler(value = Exception.class)
-    public Object ajaxErrorHandler(HttpServletRequest request, HttpServletResponse response, Exception e) throws Exception{
+    public Object ajaxErrorHandler(HttpServletRequest request, HttpServletResponse response, Exception e) throws Exception {
         e.printStackTrace();
 
-        if(isAjax(request)){
+        if (isAjax(request)) {
             return SwebJSONResult.errorException(e.getMessage());
-        }else{
+        } else {
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.addObject("exception", e);
-            modelAndView.addObject("url",request.getRequestURL());
+            modelAndView.addObject("url", request.getRequestURL());
             modelAndView.setViewName(ERROR_VIEW);
             return modelAndView;
         }
     }
 
-    public static boolean isAjax(HttpServletRequest request){
+    public static boolean isAjax(HttpServletRequest request) {
         return (request.getHeader("X-Requested-With") != null
                 && "XMLHttpRequest".equals(request.getHeader("X-Requested-With").toString()));
     }

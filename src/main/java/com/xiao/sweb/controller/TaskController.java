@@ -14,15 +14,15 @@ public class TaskController {
     AsyncTask asyncTask;
 
     @RequestMapping("asyncTask")
-    public String testAsyncTask() throws Exception{
+    public String testAsyncTask() throws Exception {
         long start = System.currentTimeMillis();
 
         Future<Boolean> a = asyncTask.doTask1();
         Future<Boolean> b = asyncTask.doTask2();
         Future<Boolean> c = asyncTask.doTask3();
 
-        while (!a.isDone() || !b.isDone() || !c.isDone()){
-            if(a.isDone() && b.isDone() && c.isDone()){
+        while (!a.isDone() || !b.isDone() || !c.isDone()) {
+            if (a.isDone() && b.isDone() && c.isDone()) {
                 break;
             }
         }

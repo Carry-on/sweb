@@ -10,7 +10,7 @@ import java.util.Properties;
 public class PagehelperConfig {
 
     @Bean
-    public PageHelper gerPageHelper(){
+    public PageHelper gerPageHelper() {
         PageHelper pageHelper = new PageHelper();
         Properties properties = new Properties();
         properties.setProperty("heplerDialect", "mysql");
