@@ -1,6 +1,6 @@
 package com.xiao.sweb.common;
 
-import com.example.recruit.enums.ResultEnum;
+import com.xiao.sweb.enums.ResultEnum;
 import lombok.Data;
 
 @Data

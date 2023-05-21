@@ -1,6 +1,6 @@
 package com.xiao.sweb.common;
 
-import com.example.recruit.enums.ResultEnum;
+import com.xiao.sweb.enums.ResultEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
