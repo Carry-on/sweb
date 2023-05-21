@@ -31,4 +31,33 @@ public class RestfulResponse<T> {
     return restfulResponse;
   }
 
+  public static RestfulResponse error(Integer code, String message){
+    RestfulResponse response = new RestfulResponse();
+    response.setCode(code);
+    response.setMessage(message);
+    return response;
+  }
+
+  public static RestfulResponse error(ResultEnum resultEnum){
+    return error(resultEnum.getCode(), resultEnum.getMessage());
+  }
+
+  public static RestfulResponse success(Integer code, String message, Object data){
+    RestfulResponse<Object> response = new RestfulResponse();
+    response.setCode(code);
+    response.setMessage(message);
+    response.setData(data);
+    return response;
+  }
+
+  public static RestfulResponse success(ResultEnum resultEnum, Object data){
+    return success(resultEnum.getCode(), resultEnum.getMessage(), data);
+  }
+
+  public static RestfulResponse success(Object data){
+    return success(ResultEnum.SUCCESS, data);
+  }
+
+
+
 }
