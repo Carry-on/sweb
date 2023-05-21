@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 从高到地低 OFF 、 FATAL 、 ERROR 、 WARN 、 INFO 、 DEBUG 、 TRACE 、 ALL -->  
+<!-- 日志输出规则  根据当前ROOT 级别，日志输出时，级别高于root默认的级别时  会输出 -->  
+<!-- 以下  每个配置的 filter 是过滤掉输出文件里面，会出现高级别文件，依然出现低级别的日志信息，通过filter 过滤只记录本级别的日志--> 
+<configuration>
+    <!-- 文件输出格式 -->
+    <property name="PATTERN"
+        value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) |-%-5level [%thread] %c [%L] -| %msg%n" />
+    <!-- 文件路径 -->
+    <!--<property name="FILE_PATH" value="D:/DevData/kmcmsLogs" /> -->
+
+<!--    <springProfile name="dev">-->
+<!--        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">-->
+<!--            <encoder>-->
+<!--                <pattern>${PATTERN}</pattern>-->
+<!--            </encoder>-->
+<!--        </appender>-->
+<!--        <logger name="com.lianren" level="DEBUG" />-->
+<!--        <root level="info">-->
+<!--            <appender-ref ref="CONSOLE" />-->
+<!--        </root>-->
+<!--    </springProfile>-->
+    <springProfile name="local">
+        <appender name="ROLLING"
+          class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <!-- 文件路径 -->
+            <file>/var/log/java/lianren_doc.log</file>
+            <rollingPolicy
+              class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <!-- rollover daily -->
+                <fileNamePattern>/var/log/java/lianren_doc_%d{yyyy-MM-dd}.%i.log
+                </fileNamePattern>
+                <!-- each file should be at most 100MB, keep 60 days worth of history,
+                    but at most 20GB -->
+                <maxFileSize>100MB</maxFileSize>
+                <maxHistory>60</maxHistory>
+                <totalSizeCap>10000MB</totalSizeCap>
+            </rollingPolicy>
+            <!-- <layout class="ch.qos.logback.classic.PatternLayout"> <pattern>${PATTERN}</pattern>
+                </layout> -->
+            <encoder>
+                <pattern>${PATTERN}</pattern>
+            </encoder>
+        </appender>
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>${PATTERN}</pattern>
+            </encoder>
+        </appender>
+
+        <root level="INFO">
+            <appender-ref ref="ROLLING" />
+            <appender-ref ref="CONSOLE" />
+        </root>
+    </springProfile>
+
+    <springProfile name="dev">
+        <appender name="ROLLING"
+                  class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <!-- 文件路径 -->
+            <file>/var/log/java/lianren_doc.log</file>
+            <rollingPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <!-- rollover daily -->
+                <fileNamePattern>/var/log/java/lianren_doc_%d{yyyy-MM-dd}.%i.log
+                </fileNamePattern>
+                <!-- each file should be at most 100MB, keep 60 days worth of history,
+                    but at most 20GB -->
+                <maxFileSize>100MB</maxFileSize>
+                <maxHistory>60</maxHistory>
+                <totalSizeCap>10000MB</totalSizeCap>
+            </rollingPolicy>
+            <!-- <layout class="ch.qos.logback.classic.PatternLayout"> <pattern>${PATTERN}</pattern>
+                </layout> -->
+            <encoder>
+                <pattern>${PATTERN}</pattern>
+            </encoder>
+        </appender>
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>${PATTERN}</pattern>
+            </encoder>
+        </appender>
+
+        <root level="INFO">
+            <appender-ref ref="ROLLING" />
+            <appender-ref ref="CONSOLE" />
+        </root>
+    </springProfile>
+
+    <springProfile name="test">
+        <appender name="ROLLING"
+            class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <!-- 文件路径 -->
+            <file>/var/log/java/lianren_doc.log</file>
+            <rollingPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <!-- rollover daily -->
+                <fileNamePattern>/var/log/java/lianren_doc_%d{yyyy-MM-dd}.%i.log
+                </fileNamePattern>
+                <!-- each file should be at most 100MB, keep 60 days worth of history, 
+                    but at most 20GB -->
+                <maxFileSize>100MB</maxFileSize>
+                <maxHistory>60</maxHistory>
+                <totalSizeCap>10000MB</totalSizeCap>
+            </rollingPolicy>
+            <!-- <layout class="ch.qos.logback.classic.PatternLayout"> <pattern>${PATTERN}</pattern> 
+                </layout> -->
+            <encoder>
+                <pattern>${PATTERN}</pattern>
+            </encoder>
+        </appender>
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>${PATTERN}</pattern>
+            </encoder>
+        </appender>
+
+        <root level="INFO">
+            <appender-ref ref="ROLLING" />
+            <appender-ref ref="CONSOLE" />
+        </root>
+    </springProfile>
+
+
+    <springProfile name="prod">
+        <appender name="ROLLING"
+                  class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <!-- 文件路径 -->
+            <file>/var/log/java/lianren_doc.log</file>
+            <rollingPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <!-- rollover daily -->
+                <fileNamePattern>/var/log/java/lianren_doc_%d{yyyy-MM-dd}.%i.log
+                </fileNamePattern>
+                <!-- each file should be at most 100MB, keep 60 days worth of history,
+                    but at most 20GB -->
+                <maxFileSize>100MB</maxFileSize>
+                <maxHistory>60</maxHistory>
+                <totalSizeCap>10000MB</totalSizeCap>
+            </rollingPolicy>
+            <!-- <layout class="ch.qos.logback.classic.PatternLayout"> <pattern>${PATTERN}</pattern>
+                </layout> -->
+            <encoder>
+                <pattern>${PATTERN}</pattern>
+            </encoder>
+        </appender>
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>${PATTERN}</pattern>
+            </encoder>
+        </appender>
+
+        <root level="INFO">
+            <appender-ref ref="ROLLING" />
+            <appender-ref ref="CONSOLE" />
+        </root>
+    </springProfile>
+
+</configuration>
+
