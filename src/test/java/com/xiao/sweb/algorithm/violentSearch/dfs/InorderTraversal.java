@@ -30,7 +30,7 @@ public class InorderTraversal {
     public List<Integer> inorderTraversalIteration(TreeNode root) {
         List<Integer> list = new ArrayList<>();
         Queue<TreeNode> q = new LinkedList<>();
-        while (root != null && !q.isEmpty()) {
+        while (root != null || !q.isEmpty()) {
             while (root != null) {
                 q.offer(root);
                 root = root.left;
