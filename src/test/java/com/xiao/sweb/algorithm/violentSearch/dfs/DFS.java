@@ -3,6 +3,7 @@ package com.xiao.sweb.algorithm.violentSearch.dfs;
 import com.xiao.sweb.algorithm.TreeNode;
 
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -24,13 +25,13 @@ public class DFS {
     }
 
     public List<Integer> dfsInorderByIteration(TreeNode root) {
-        Queue<TreeNode> q = new LinkedList<>();
-        while (root != null || !q.isEmpty()) {
+        Deque<TreeNode> stack = new LinkedList<>();
+        while (root != null || !stack.isEmpty()) {
             while (root != null) {
-                q.offer(root);
+                stack.push(root);
                 root = root.left;
             }
-            root = q.poll();
+            root = stack.poll();
             list.add(root.val);
             root = root.right;
         }
@@ -41,14 +42,14 @@ public class DFS {
         if (root == null) {
             return list;
         }
-        Queue<TreeNode> q = new LinkedList<>();
-        while (root != null || !q.isEmpty()) {
+        Deque<TreeNode> stack = new LinkedList<>();
+        while (root != null || !stack.isEmpty()) {
             while (root != null) {
                 list.add(root.val);
-                q.offer(root);
+                stack.push(root);
                 root = root.left;
             }
-            root = q.poll();
+            root = stack.poll();
             root = root.right;
         }
 
@@ -59,20 +60,20 @@ public class DFS {
         if (root == null) {
             return null;
         }
-        Queue<TreeNode> q = new LinkedList<>();
+        Deque<TreeNode> stack = new LinkedList<>();
         TreeNode prev = null;
-        while (root != null || !q.isEmpty()) {
+        while (root != null || !stack.isEmpty()) {
             while (root != null) {
-                q.offer(root.left);
+                stack.push(root.left);
                 root = root.left;
             }
-            root = q.poll();
+            root = stack.poll();
             if (root.right == null || root.right == prev) {
                 list.add(root.val);
                 prev = root;
                 root = null;
             } else {
-                q.offer(root);
+                stack.offer(root);
                 root = root.right;
             }
 
