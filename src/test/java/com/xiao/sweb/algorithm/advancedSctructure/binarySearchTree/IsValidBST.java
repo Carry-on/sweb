@@ -13,10 +13,25 @@ public class IsValidBST {
     public static void main(String[] args) {
         TreeNode root = new TreeNode(2);
         TreeNode left = new TreeNode(1);
-        TreeNode right =  new TreeNode(3);
+        TreeNode right = new TreeNode(3);
         root.left = left;
         root.right = right;
         System.out.println(isValidBST(root));
+    }
+
+    TreeNode pre = null;
+
+    public boolean isValidBSTDFS(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        boolean left = isValidBSTDFS(root.left);
+        if (pre != null && pre.val >= root.val) {
+            return false;
+        }
+        pre = root;
+        boolean right = isValidBSTDFS(root.right);
+        return left && right;
     }
 
     public static boolean isValidBST(TreeNode root) {
@@ -27,12 +42,12 @@ public class IsValidBST {
         int prev = Integer.MIN_VALUE;
         Deque<TreeNode> stack = new LinkedList<>();
         while (root != null || !stack.isEmpty()) {
-            while (root != null){
+            while (root != null) {
                 stack.push(root);
                 root = root.left;
             }
             root = stack.pop();
-            if (prev >= root.val){
+            if (prev >= root.val) {
                 return false;
             }
             prev = root.val;
@@ -42,13 +57,13 @@ public class IsValidBST {
     }
 
     private static boolean dfs(TreeNode root, Integer min, Integer max) {
-        if (root == null){
+        if (root == null) {
             return true;
         }
-        if (min != null && root.val <= min){
+        if (min != null && root.val <= min) {
             return false;
         }
-        if (max != null && root.val >= max){
+        if (max != null && root.val >= max) {
             return false;
         }
         return dfs(root.left, min, root.val) && dfs(root.right, root.val, max);
