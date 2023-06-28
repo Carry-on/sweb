@@ -17,7 +17,7 @@ public class SerializeTree {
 
     public String rSerialize(TreeNode root, String str){
         if (root == null){
-            str += "None";
+            str += "None,";
         }else {
             str += root.val + ",";
             str = rSerialize(root.left, str);
