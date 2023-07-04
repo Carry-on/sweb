@@ -12,11 +12,15 @@ import java.util.Set;
  */
 public class LowestCommonAncestor {
 
+    TreeNode ans = null;
+
     // 存储父节点
     Map<Integer, TreeNode> parent = new HashMap<>();
     Set<Integer> visited = new HashSet<>();
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q){
+//        dfs(root, p, q);
+//        return ans;
         dfs(root);
         while (p != null){
             visited.add(p.val);
@@ -40,5 +44,17 @@ public class LowestCommonAncestor {
             parent.put(root.right.val, root);
             dfs(root.right);
         }
+    }
+
+    private boolean dfs(TreeNode root, TreeNode p, TreeNode q){
+        if (root == null){
+            return false;
+        }
+        boolean lson = dfs(root.left, p, q);
+        boolean rson = dfs(root.right, p, q);
+        if ((lson && rson) || ((root.val == p.val || root.val == q.val) && (lson || rson))){
+            ans = root;
+        }
+        return lson || rson || (root.val == p.val || root.val == q.val);
     }
 }
