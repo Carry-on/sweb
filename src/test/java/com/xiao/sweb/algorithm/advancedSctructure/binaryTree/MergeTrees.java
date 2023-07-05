@@ -2,6 +2,9 @@ package com.xiao.sweb.algorithm.advancedSctructure.binaryTree;
 
 import com.xiao.sweb.algorithm.TreeNode;
 
+/**
+ * 617. 合并二叉树
+ */
 public class MergeTrees {
 
     public TreeNode mergeTrees(TreeNode root1, TreeNode root2){
