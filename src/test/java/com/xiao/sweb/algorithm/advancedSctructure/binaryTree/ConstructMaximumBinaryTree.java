@@ -11,7 +11,7 @@ import java.util.List;
 public class ConstructMaximumBinaryTree {
 
     public TreeNode constructMaximumBinaryTree(int[] nums) {
-//        return build(nums, 0, nums.length);
+//        return build(nums, 0, nums.length - 1);
         int n = nums.length;
         List<Integer> stack = new ArrayList<>();
         TreeNode[] tree = new TreeNode[n];
@@ -35,7 +35,7 @@ public class ConstructMaximumBinaryTree {
             return null;
         }
         int best = left;
-        for (int i = left + 1; i < right; i++) {
+        for (int i = left + 1; i <= right; i++) {
             if (nums[i] > nums[best]) {
                 best = i;
             }
