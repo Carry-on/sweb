@@ -33,7 +33,7 @@ import java.util.Scanner;
  *
  * @author 谢仕海
  */
-@Log4j2
+//@Log4j2
 public class DvMpGenerator {
 
   /**
@@ -175,20 +175,20 @@ public class DvMpGenerator {
       in = new InputStreamReader(inputStream, "UTF-8");
       properties.load(in);
     } catch (IOException e) {
-      log.error(e);
+//      log.error(e);
     } finally {
       if (in != null) {
         try {
           in.close();
         } catch (IOException e) {
-          log.error(e);
+//          log.error(e);
         }
       }
       if (inputStream != null) {
         try {
           inputStream.close();
         } catch (IOException e) {
-          log.error(e);
+//          log.error(e);
         }
       }
     }
