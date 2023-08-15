@@ -22,19 +22,19 @@ public class AppTest {
     public static void main(String[] args) {
         try {
             // 合作方 partner_key， 注意不是 partner
-//            String partner_key = "HdGtQUf4lkmTobNZ";
+            String partner_key = "HdGtQUf4lkmTobNZ";
 //            String partner_key = "yWaCTPOSozGNJnZq";
-//            // UNIX TIMESTAMP 最小单位为秒
-//            String atime = "1690422798";
-//            // 第三方用户唯一标识，可以为字母与数字组合的字符串。
-//            String user_id = "39637";
-//            // 计算sign结果为: 5afda19c5d65a7a7
-//            String sign = getSign(partner_key, atime, user_i9d);
-//            System.out.println(sign);
-            int number = 300/100;
-            BigDecimal result = BigDecimal.valueOf(number).multiply(BigDecimal.valueOf(1.05)).setScale(1, BigDecimal.ROUND_HALF_UP).multiply(BigDecimal.valueOf(100));
-            Integer data = result.intValue();
-            System.out.println("结果：" + data);
+            // UNIX TIMESTAMP 最小单位为秒
+            String atime = "1691486632";
+            // 第三方用户唯一标识，可以为字母与数字组合的字符串。
+            String user_id = "39637";
+            // 计算sign结果为: 5afda19c5d65a7a7
+            String sign = getSign(partner_key, atime, user_id);
+            System.out.println(sign);
+//            int number = 300/100;
+//            BigDecimal result = BigDecimal.valueOf(number).multiply(BigDecimal.valueOf(1.05)).setScale(1, BigDecimal.ROUND_HALF_UP).multiply(BigDecimal.valueOf(100));
+//            Integer data = result.intValue();
+//            System.out.println("结果：" + data);
         }
         catch (Exception ex)
         {
