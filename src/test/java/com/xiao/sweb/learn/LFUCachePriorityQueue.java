@@ -58,14 +58,14 @@ public class LFUCachePriorityQueue<K, V> {
         K key;
         V value;
         int freq;
-        long createTime;
+//        long createTime;
         long accessTime;
 
         public Node(K key, V value){
             this.key = key;
             this.value = value;
             this.freq = 1;
-            this.createTime = System.nanoTime();
+//            this.createTime = System.nanoTime();
             this.accessTime = System.nanoTime();
         }
 
