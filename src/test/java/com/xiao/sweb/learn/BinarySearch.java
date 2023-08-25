@@ -18,4 +18,17 @@ public class BinarySearch {
         }
         return -1;
     }
+
+    public static void main(String[] args) {
+        int[] arr = {1, 3, 5, 7, 9, 11, 13, 15};
+        int target = 7;
+
+        int index = binarySearch(arr, target);
+
+        if (index != -1) {
+            System.out.println("目标元素 " + target + " 在索引 " + index + " 处找到");
+        } else {
+            System.out.println("目标元素 " + target + " 不存在");
+        }
+    }
 }
