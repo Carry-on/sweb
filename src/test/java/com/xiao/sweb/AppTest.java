@@ -5,6 +5,8 @@ import org.apache.commons.codec.binary.Hex;
 import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AppTest {
     // 计算 Sign
