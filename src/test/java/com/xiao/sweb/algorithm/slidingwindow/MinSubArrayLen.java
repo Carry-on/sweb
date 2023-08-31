@@ -15,7 +15,7 @@ public class MinSubArrayLen {
         int sum = 0;
         while (end < n){
             sum += nums[end];
-            while (sum > target){
+            while (sum >= target){
                 ans = Math.min(ans, end -start + 1);
                 sum -= nums[start];
                 start++;
