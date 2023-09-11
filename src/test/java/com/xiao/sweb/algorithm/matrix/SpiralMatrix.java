@@ -7,18 +7,6 @@ import java.util.List;
  * 54. 螺旋矩阵
  */
 public class SpiralMatrix {
-//    public List<Integer> spiralMatrix(int[][] matrix) {
-//        List<Integer> order = new ArrayList<>();
-//        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
-//            return order;
-//        }
-//        int rows = matrix.length, columns = matrix[0].length;
-//        boolean[][] visited = new boolean[rows][columns];
-//        int total = rows * columns;
-//        int row = 0, column = 0;
-//        int[][] directions = {{0,1},{1,0},{0,-1},{-1,0}};
-//        return order;
-//    }
 
     public List<Integer> spiralMatrix(int[][] matrix) {
         List<Integer> order = new ArrayList<>();
